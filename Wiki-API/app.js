@@ -1,0 +1,33 @@
+const bodyParser = require("body-parser");
+const express = require("express");
+const ejs = require("ejs");
+const mongoose = require("mongoose");
+
+const app = express();
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
+
+const dbUser = "admin";
+const dbPW = "yVlW6amaqDmXsZKn";
+const dbName = "wikiDB";
+mongoose.connect(
+    "mongodb+srv://" +
+    dbUser +
+    ":" +
+    dbPW +
+    "@cluster0.c90thx8.mongodb.net/" +
+    dbName
+);
+
+const articleSchema = new mongoose.Schema({
+    title: String,
+    content: String,
+});
+
+const Article = mongoose.model("Article", articleSchema);
+
+app.listen(3000, function () {
+    console.log("Server started on port 3000");
+  });
+
