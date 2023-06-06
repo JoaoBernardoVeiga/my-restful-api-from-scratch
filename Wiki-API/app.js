@@ -32,6 +32,9 @@ app.get("/articles", (req, res) => {
     Article.find({})
     .then((foundArticles) => {
         res.send(foundArticles);
+    })
+    .catch(error => {
+        res.send(error);
     });
 });
 
@@ -44,8 +47,22 @@ app.post("/articles", (req, res) => {
 
     newArticle.save()
     .then(() => {
-        console.log(req.body.title);
-        console.log(req.body.content);
+        res.send("Successfully added a new article.");
+    })
+    .catch(error => {
+        res.send(error);
+    });
+
+});
+
+app.delete("/articles", (req, res) => {
+
+    Article.deleteMany()
+    .then(() => {
+        res.send("Successfully deleted all articles.")
+    })
+    .catch(error => {
+        res.send(error);
     });
 
 });
