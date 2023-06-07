@@ -114,6 +114,21 @@ app.route("/articles/:articleTitle")
         .catch(error => {
             res.send(error);
         })
+    })
+
+    .delete((req, res) => {
+        Article.deleteOne(
+            {title: req.params.articleTitle}
+        )
+        .then((returnedObject) => {
+            if(returnedObject.deletedCount === 1){
+                res.send("Successfully deleted the selected article.");
+            } else {
+                if(returnedObject.deletedCount === 0){
+                    res.send("Failed to delete the selected article.");
+                } 
+            }
+        })
     });
 
 app.listen(3000, function () {
