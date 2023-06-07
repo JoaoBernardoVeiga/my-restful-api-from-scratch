@@ -94,13 +94,27 @@ app.route("/articles/:articleTitle")
         Article.replaceOne(
             {title: req.params.articleTitle},
             {title: req.body.title, content: req.body.content},
-        ).then(() => {
-            res.send("Successfully updated the article.");
+        )
+        .then(() => {
+            res.send("Successfully replaced the article.");
         })
         .catch(error => {
             res.send(error);
         })
     })
+
+    .patch((req, res) => {
+        Article.updateOne(
+            {title: req.params.articleTitle},
+            {$set: req.body},
+        )
+        .then(() => {
+            res.send("Successfully updated the article.");
+        })
+        .catch(error => {
+            res.send(error);
+        })
+    });
 
 app.listen(3000, function () {
     console.log("Server started on port 3000");
