@@ -88,7 +88,19 @@ app.route("/articles/:articleTitle")
         .catch(error => {
             res.send(error);
         });
-    });
+    })
+
+    .put((req, res) => {
+        Article.replaceOne(
+            {title: req.params.articleTitle},
+            {title: req.body.title, content: req.body.content},
+        ).then(() => {
+            res.send("Successfully updated the article.");
+        })
+        .catch(error => {
+            res.send(error);
+        })
+    })
 
 app.listen(3000, function () {
     console.log("Server started on port 3000");
